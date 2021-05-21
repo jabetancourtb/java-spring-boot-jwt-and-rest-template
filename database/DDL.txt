@@ -1,0 +1,20 @@
+CREATE DATABASE db_customer
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Colombia.1252'
+    LC_CTYPE = 'Spanish_Colombia.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+
+
+
+CREATE TABLE customer
+(
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(256) NOT NULL,
+	last_name VARCHAR(256) NOT NULL,
+	username VARCHAR(256) NOT NULL UNIQUE,
+	encrypted_password VARCHAR(256) NOT NULL
+);
