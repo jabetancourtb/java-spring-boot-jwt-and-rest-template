@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { CustomerModel } from 'src/app/models/customer/customer.model';
 import { ToastrService } from 'ngx-toastr';
-import { CustomerDTO } from 'src/app/models/customer/customerDto.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-customer',
@@ -11,21 +11,32 @@ import { CustomerDTO } from 'src/app/models/customer/customerDto.model';
 })
 export class CustomerComponent implements OnInit {
 
-  customer: CustomerDTO;
+  customer: CustomerModel;
+
+  getCustomerForm = new FormGroup({
+    id : new FormControl(null, Validators.required),
+  });
+
 
   constructor(private customerService: CustomerService, 
     private toastr: ToastrService) { }
 
     ngOnInit(): void {
-    let promise = this.customerService.getCustomerFromRestClient(1);
+    
+    }
 
-    promise.then(data => {
-      this.customer = data;
-    });
+    public getCustomerFromRestClient() {
+      let customerId = +this.getCustomerForm.get('id').value
 
-    promise.catch(error => {
-      this.toastr.error('The customer was not found');
-    })
-  }
+      let promise = this.customerService.getCustomerFromRestClient(customerId);
+  
+      promise.then(data => {
+        this.customer = data;
+      });
+  
+      promise.catch(error => {
+        this.toastr.error(error.error.message);
+      });
+    }
 
 }

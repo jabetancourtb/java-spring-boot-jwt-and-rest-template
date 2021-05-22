@@ -5,7 +5,7 @@ export class CustomerDTO {
     firstName: string;
     lastName: string;
 
-    constructor( username: string, plainPassword: string, firstName: string, lastName: string) {
+    constructor(username: string, plainPassword: string, firstName: string, lastName: string) {
         this.username = username;
         this.plainPassword = plainPassword;
         this.firstName = firstName;

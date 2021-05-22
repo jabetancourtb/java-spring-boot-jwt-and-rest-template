@@ -2,6 +2,7 @@ package com.api.infrastructure.applicationservice.customer;
 
 import com.api.domain.customer.Customer;
 import com.api.domain.customer.CustomerJPARepository;
+import com.api.domain.exception.customer.UsernameAlreadyExistsException;
 import com.api.infrastructure.dto.customer.CustomerDTO;
 import com.api.infrastructure.dto.signin.SignInDTO;
 import com.api.infrastructure.util.JwtUtil;
@@ -36,14 +37,18 @@ public class CustomerApplicationServiceImpl implements CustomerApplicationServic
 
     @Override
     public Customer signUp(CustomerDTO customerDTO) {
-    	try {
-    		String encryptedPassword = encryptPassword(customerDTO.getPlainPassword());
-	        Customer customer = new Customer(customerDTO.getFirstName(), customerDTO.getLastName()
-	        , customerDTO.getUsername(), encryptedPassword);
-	        return customerJPARepository.save(customer);
-    	}
-    	catch(Exception e) {
-    		throw e;
+		String encryptedPassword = encryptPassword(customerDTO.getPlainPassword());
+		verifyIfUsernameAlreadyExists(customerDTO.getUsername());
+        Customer customer = new Customer(0L, customerDTO.getFirstName(), customerDTO.getLastName()
+        , customerDTO.getUsername(), encryptedPassword);
+        return customerJPARepository.save(customer);
+    }
+    
+    private void verifyIfUsernameAlreadyExists(String username) {
+    	Customer customer = customerJPARepository.getCustomerByUsername(username);
+    	
+    	if(customer != null) {
+    		throw new UsernameAlreadyExistsException(null);
     	}
     }
 

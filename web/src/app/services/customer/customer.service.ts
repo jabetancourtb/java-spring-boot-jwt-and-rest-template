@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { CustomerDTO } from "src/app/models/customer/customerDto.model";
 import { CustomerModel } from "src/app/models/customer/customer.model";
 import { SignInDTO } from "src/app/models/sign-in/signInDto.model";
@@ -44,10 +43,10 @@ export class CustomerService {
         });
     }
 
-    getCustomerFromRestClient(customerId: number) : Promise<CustomerDTO> {
+    getCustomerFromRestClient(customerId: number) : Promise<CustomerModel> {
         let apiUrl : string = environment.API_URL_DEVELOPMENT + "/customer/" + customerId;
         return new Promise((resolve, reject) => {
-             this.http.get<CustomerDTO>(apiUrl).subscribe(data => {
+             this.http.get<CustomerModel>(apiUrl).subscribe(data => {
                     resolve(data);
                 }, 
                 (error) => {

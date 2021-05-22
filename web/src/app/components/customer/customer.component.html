@@ -1,6 +1,35 @@
-<p>customer from Rest Client</p>
-FirstName: {{customer.firstName}}
-<br>
-LastName: {{customer.lastName}}
-<br>
-Username: {{customer.username}}
+<div class="panel panel-primary" style="margin-top: 5%">
+
+    <div class="panel-heading d-flex justify-content-center">
+        <h3 class="panel-title">Customer from Mockaroo API Rest Client</h3>
+    </div>
+
+    <p class="d-flex justify-content-center" style="margin: 1%;"> 
+        In this section the information of the current user will not be shown, 
+        it will only allow to search for a customer from Mockaroo API rest client by its id, 
+        since this is the test condition.
+    </p>
+
+    <div class="container text-center" style="max-width:350px; margin-top: 2%;">
+        <form class="navbar-form" [formGroup]="getCustomerForm" (ngSubmit)="getCustomerFromRestClient()"> 
+            <input type="number" placeholder="customer id" formControlName="id" max-length="256" class="form-control"/>
+            <button class="btn btn-lg btn-block" style="background-color: #1f1a33; color: white">Search</button>
+        </form>
+    </div>
+    
+    <div class="d-flex flex-column" style="margin-top: 2%;" *ngIf="customer != undefined">
+        <div class="p-2 d-flex justify-content-center">
+            Id: {{customer.id}}
+        </div> 
+        <div class="p-2 d-flex justify-content-center">
+            FirstName: {{customer.firstName}}
+        </div> 
+        <div class="p-2 d-flex justify-content-center">
+            LastName: {{customer.lastName}}
+        </div> 
+        <div class="p-2 d-flex justify-content-center">
+            Username: {{customer.username}}
+        </div> 
+    </div>
+
+</div>

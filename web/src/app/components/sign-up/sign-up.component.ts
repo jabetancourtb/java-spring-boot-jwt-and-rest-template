@@ -55,7 +55,7 @@ export class SignUpComponent implements OnInit {
     });
 
     promise.catch(error => {
-      this.toastr.error('Something went wrong');
+      this.toastr.error(error.error.message);
     });
   }
 

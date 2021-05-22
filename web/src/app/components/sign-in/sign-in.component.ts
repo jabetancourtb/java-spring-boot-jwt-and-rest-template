@@ -43,7 +43,7 @@ export class SignInComponent implements OnInit {
     });
 
     promise.catch(error => {
-      this.toastr.error('The credentials are wrong');
+      this.toastr.error(error.error.message);
     });
   }
 
